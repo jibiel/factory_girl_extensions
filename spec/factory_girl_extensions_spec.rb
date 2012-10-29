@@ -34,6 +34,10 @@ end
 FactoryGirl.define do
   factory :dog do
     name "Rover"
+
+    factory :collie do
+      name "Lassie"
+    end
   end
 
   factory :awesome_dog, :class => Dog do
@@ -97,6 +101,11 @@ describe FactoryGirl::Syntax::ObjectMethods do
     it "yields the built instance to block" do
       @dog = Dog.build(:name => "Spot"){|d| d.name += " Remover" }
       @dog.name.should == "Spot Remover"
+    end
+
+    it "detects nested factories" do
+      @dog = Dog.build(:collie)
+      @dog.name.should == "Lassie"
     end
 
     it "with prefix" do
@@ -167,6 +176,11 @@ describe FactoryGirl::Syntax::ObjectMethods do
       end
     end
 
+    it "detects nested factories" do
+      @dog = Dog.generate(:collie)
+      @dog.name.should == "Lassie"
+    end
+
     it "with prefix" do
       @dog = Dog.generate(:awesome)
       @dog.name.should == "Awesome Dog"
@@ -207,6 +221,10 @@ describe FactoryGirl::Syntax::ObjectMethods do
 
     it "yields the built instance to block" do
       Dog.attributes(:name => "Spot"){|hash| hash[:name] += " Remover" }.should == { :name => "Spot Remover" }
+    end
+
+    it "detects nested factories" do
+      Dog.attributes(:collie).should == { :name => "Lassie" }
     end
 
     it "with prefix" do

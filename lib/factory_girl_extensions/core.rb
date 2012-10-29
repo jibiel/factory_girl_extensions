@@ -118,7 +118,7 @@ module FactoryGirl
         when 0
           detect_factory base_name
         when 1
-          detect_factory "#{parts.first}_#{base_name}", "#{base_name}_#{parts.first}"
+          detect_factory parts.first, "#{parts.first}_#{base_name}", "#{base_name}_#{parts.first}"
         when 2
           detect_factory "#{parts.first}_#{base_name}_#{parts.last}", "#{parts.last}_#{base_name}_#{parts.first}"
         else

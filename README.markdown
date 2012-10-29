@@ -47,6 +47,21 @@ User.gen
 User.gen!
 User.attrs
 
+# Nested factories are supported
+FactoryGirl.define do
+  factory :user do
+    name 'Bob Smith'
+    role 0
+
+    factory :admin do
+      role 1
+    end
+  end
+end
+
+User.generate(:admin).role # => 1
+User.generate(:admin).name # => "Bob Smith"
+
 # Factories with custom prefix/suffixes are also supported.
 FactoryGirl.define do
   factory :admin_user, :parent => :user do
